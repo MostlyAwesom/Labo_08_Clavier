@@ -43,7 +43,7 @@ void affichageBut();
  * Affiche les statistiques du test de dextérité à l'utilisateurs. On retrouve le nombre
  * de réponse(s) correcte(s), le temps effectuté, le nombre de lancé et une moyenne de temps en seconde par lancé.
  */
-void affichageResultats(const int& nbReponsesCorrectes, const double& tempsTotal, const int& nbLance);
+void affichageResultats(const int& nbReponsesCorrectes, const double& tempsTotal, const double& nbLance);
 
 /**
  * \brief Génère un lancé, enregistre la réponse et le temps utilisé.
@@ -55,7 +55,7 @@ void affichageResultats(const int& nbReponsesCorrectes, const double& tempsTotal
  * Génère une lettre minuscule aléatoirement, l'utilisateur doit ensuite entré cette lettre le plus rapidement
  * possible dans la console car le temps est chronométré.
  */
-void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, double& tempsTotal);
+void lance(const char& lettre, int& nbJuste, double& tempsTotal);
 
 
 int main() {
@@ -65,10 +65,12 @@ int main() {
                 LANCE_MIN  = 1,
                 LANCE_MAX  = 10;
 
+   const char   APOSTROPHE    = '`'; //Caractère précédent 'a' dans la table ASCII
+
    int          nbLance,
                 nbCorrect  = 0;
 
-   double       tempsTotal;
+   double       tempsTotal = 0.;
 
    // Présentation du programme
    affichageBut();
@@ -80,11 +82,11 @@ int main() {
 
       // Lancement du test de dextérité
       for(int indiceLance = 0; indiceLance < nbLance; ++indiceLance) {
-         lance(LETTRE_MIN, LETTRE_MAX, nbCorrect, tempsTotal);
+         lance((APOSTROPHE + (char)nombreAleatoire(LETTRE_MIN, LETTRE_MAX)), nbCorrect, tempsTotal);
       }
 
       // Affichage des résultats du test
-      affichageResultats(nbCorrect, tempsTotal, nbLance);
+      affichageResultats(nbCorrect, tempsTotal, (double)nbLance);
 
    }while(rejouer());
 
@@ -100,21 +102,16 @@ void affichageBut(){
         << "au fur et a mesure.";
 }
 
-void affichageResultats(const int& nbReponsesCorrectes, const double& tempsTotal, const int& nbLance){
+void affichageResultats(const int& nbReponsesCorrectes, const double& tempsTotal, const double& nbLance){
    cout << endl
         << "Nombre de reponse correcte : " << nbReponsesCorrectes                             << endl
-        << "Temps total : "                << tempsTotal                                      << endl
-        << "Temps par lettre : "           << setprecision(2) << tempsTotal / (double)nbLance << endl;
+        << "Temps total : "                << setprecision(2) << tempsTotal                   << endl
+        << "Temps par lettre : "           << setprecision(2) << tempsTotal / nbLance << endl;
 }
 
-void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, double& tempsTotal){
-
+void lance(const char& lettre, int& nbJuste, double& tempsTotal){
    // Déclaration des variables
-   char   lettre,
-          reponse;
-
-   //Génération aléatoire d'une lettre minuscule
-   lettre = (char)('a'+ nombreAleatoire(CAR_MIN, CAR_MAX) - 1);
+   char   reponse;
 
    //Démarrage du chrono
    chrono(true);

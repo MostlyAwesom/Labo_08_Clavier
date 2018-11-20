@@ -1,15 +1,14 @@
 #include "chronometre.h"
-#include <ctime>;          //time, difftime
+#include <ctime>         //time, difftime
 
 double chrono(const bool& active){
-   static time_t tempsInitial = time(NULL);
-   time_t tempsFinal = time(NULL);
+   static time_t tempsInitial;
+   time_t tempsFinal;
 
    if(active){
-      tempsInitial = time(NULL);
+      tempsInitial = time(nullptr);
       return 0.;
    } else{
-      tempsFinal = time(NULL);
-      return difftime(tempsFinal,tempsInitial);
+      return difftime(time(nullptr),tempsInitial);
    }
 }

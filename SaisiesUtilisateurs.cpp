@@ -49,7 +49,7 @@ bool rejouer(){
       cout << endl << "Voulez-vous rejouer ? [" << REJOUER << "] ou [" << QUITTER << "] :";
       reponse = (char)getchar();
       cin.ignore(numeric_limits<streamsize>::max(),'\n');
-   }while(reponse == REJOUER or reponse == QUITTER);
+   }while(reponse != REJOUER and reponse != QUITTER);
 
    if(reponse == REJOUER){
       return true;

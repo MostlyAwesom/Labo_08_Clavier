@@ -8,5 +8,5 @@ int nombreAleatoire(const int& min, const int& max){
       srand(time(NULL));
       premiereFois = false;
    }
-   return rand() % ((max - min + 1) + min);
+   return rand() % ((max - min) + min);
 }
