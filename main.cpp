@@ -85,15 +85,11 @@ void affichageResultats(const int& nbReponsesCorrectes, const double& tempsTotal
 }
 
 void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, double& tempsTotal){
-   //Include pour rand
-   //Include pour time
-   //include pour timer
+
    //include string
 
    char   lettre,
           reponse;
-
-   srand(time(NULL));
 
    //Génération aléatoire d'une lettre minuscule
    lettre = (char)('a'+ nombreAleatoire(CAR_MIN, CAR_MAX) - 1);
