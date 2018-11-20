@@ -55,7 +55,7 @@ void affichageResultats(const int& nbReponsesCorrectes, const double& tempsTotal
  * Génère une lettre minuscule aléatoirement, l'utilisateur doit ensuite entré cette lettre le plus rapidement
  * possible dans la console car le temps est chronométré.
  */
-void lance(const char& lettre, int& nbJuste, double& tempsTotal);
+void lance(const char& lettre, int& nbJuste);
 
 
 int main() {
@@ -80,10 +80,15 @@ int main() {
       // Saisie nombre de lancer , avec une gestion d'erreurs
       nbLance = saisieClavier("Combien de lances", LANCE_MIN, LANCE_MAX);
 
+      //Démarrage du chrono
+      chrono(true);
       // Lancement du test de dextérité
       for(int indiceLance = 0; indiceLance < nbLance; ++indiceLance) {
-         lance((APOSTROPHE + (char)nombreAleatoire(LETTRE_MIN, LETTRE_MAX)), nbCorrect, tempsTotal);
+         lance((APOSTROPHE + (char)nombreAleatoire(LETTRE_MIN, LETTRE_MAX)), nbCorrect);
       }
+
+      //Fin du chrono et lecture du temps écoulé
+      tempsTotal = chrono(false);
 
       // Affichage des résultats du test
       affichageResultats(nbCorrect, tempsTotal, (double)nbLance);
@@ -109,20 +114,14 @@ void affichageResultats(const int& nbReponsesCorrectes, const double& tempsTotal
         << "Temps par lettre : "           << setprecision(2) << tempsTotal / nbLance << endl;
 }
 
-void lance(const char& lettre, int& nbJuste, double& tempsTotal){
+void lance(const char& lettre, int& nbJuste){
    // Déclaration des variables
    char   reponse;
-
-   //Démarrage du chrono
-   chrono(true);
 
    //Saisie de la réponse
    cout << "Lettre : " << lettre << " : ";
    reponse = (char)getchar();
    cin.ignore(numeric_limits<streamsize>::max(),'\n');
-
-   //Fin du chrono et lecture du temps écoulé
-   tempsTotal = chrono(false);
 
    //En cas de bonne réponse, on incrémente le total de réponses correctes
    if(reponse == lettre){
