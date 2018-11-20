@@ -106,14 +106,14 @@ void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, double& tempsTo
    lettre = (char)('a'+ nombreAleatoire(CAR_MIN, CAR_MAX) - 1);
 
    //Temps au début de la question
-   time(&tempsInitial);
+   tempsInitial = time(NULL);
 
    //Saisie de la réponse
    cout << "Lettre : " << lettre << " : ";
    reponse = (char)getchar();
 
    //Temps après la réponse
-   time(&tempsFinal);
+   tempsFinal = time(NULL);
 
    //En case de bonne réponse, on incrémente le total de réponses correctes
    if(reponse == lettre){
