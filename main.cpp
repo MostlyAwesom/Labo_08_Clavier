@@ -2,8 +2,14 @@
  -----------------------------------------------------------------------------------
  Laboratoire : 08_Clavier
  Fichier     : Labo_08_Becaud_Egremy.cpp
+               chronometre.cpp
+               chronometre.h
+               generationAleatoire.cpp
+               generationAleatoire.h
+               saisiesUtilisateurs.cpp
+               saisiesUtilisateurs.h
  Auteur(s)   : Arthur Bécaud & Bruno Egremy
- Date        : 19.11.2018
+ Date        : 21.11.2018
 
  But         :
 
@@ -23,14 +29,38 @@
 
 using namespace std;
 
+/**
+ * \brief Message de présentaion spécifique à cette l'application.
+ */
 void affichageBut();
+
+/**
+ * \brief Affiche les résultats des lancés.
+ * \param[in] nbReponsesCorrectes Nombre de réponse(s) correcte(s).
+ * \param[in] tempsTotal Temps total du test de dextérité.
+ * \param[in] nbLance Nombre de lancé(s) effectué(s).
+ *
+ * Affiche les statistiques du test de dextérité à l'utilisateurs. On retrouve le nombre
+ * de réponse(s) correcte(s), le temps effectuté, le nombre de lancé et une moyenne de temps en seconde par lancé.
+ */
 void affichageResultats(const int& nbReponsesCorrectes, const double& tempsTotal, const int& nbLance);
+
+/**
+ * \brief Génère un lancé, enregistre la réponse et le temps utilisé.
+ * \param[in] CAR_MIN Caractère minimum (recommandé : 1).
+ * \param[in] CAR_MAX Caractère maximum (recommandé : 26).
+ * \param[in] nbJuste Nombre de réponse juste jusqu'à maintenant.
+ * \param[in] tempsTotal Temps total utilisé depuis le début du test.
+ *
+ * Génère une lettre minuscule aléatoirement, l'utilisateur doit ensuite entré cette lettre le plus rapidement
+ * possible dans la console car le temps est chronométré.
+ */
 void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, double& tempsTotal);
 
 
 int main() {
 
-   //Déclaration des variables et constantes
+   // Déclaration des variables et constantes
    const int    LETTRE_MIN = 1,
                 LETTRE_MAX = 26,
                 LANCE_MIN  = 1,
@@ -46,28 +76,27 @@ int main() {
 
    char         reponseRejouer;
 
-   //Présentation programme
+   // Présentation du programme
    affichageBut();
 
-   //Boucle pour recommencer
+   // Boucle pour recommencer
    do {
-      //Saisie nombre de lancer ( GESTION ERREUR )
+      // Saisie nombre de lancer , avec une gestion d'erreurs
       nbLance = saisieClavier("Combien de lances", LANCE_MIN, LANCE_MAX);
 
-      //Jeu ---- Boucle for avec nbLancer
+      // Lancement du test de dextérité
       for(int indiceLance = 0; indiceLance < nbLance; ++indiceLance) {
          lance(LETTRE_MIN, LETTRE_MAX, nbCorrect, tempsTotal);
       }
 
+      // Affichage des résultats du test
       affichageResultats(nbCorrect, tempsTotal, nbLance);
 
    }while(rejouer());
 
     // Fin de programme
     cout << "Presser ENTER pour quitter";
-    //VIDER BUFFER
-
-
+    cin.ignore(numeric_limits<streamsize>::max(),'\n');
     return EXIT_SUCCESS;
 }
 
@@ -86,8 +115,7 @@ void affichageResultats(const int& nbReponsesCorrectes, const double& tempsTotal
 
 void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, double& tempsTotal){
 
-   //include string
-
+   // Déclaration des variables
    char   lettre,
           reponse;
 
@@ -105,7 +133,7 @@ void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, double& tempsTo
    //Fin du chrono et lecture du temps écoulé
    tempsTotal = chrono(false);
 
-   //En case de bonne réponse, on incrémente le total de réponses correctes
+   //En cas de bonne réponse, on incrémente le total de réponses correctes
    if(reponse == lettre){
       nbJuste++;
    }
