@@ -15,12 +15,16 @@
 #include <iostream>              //cout, cin, etc.
 #include <string>                //type string
 #include <iomanip>               //setPrecision
+#include <limits>                //numeric_limits
 #include "GenerationAleatoire.h" //nombreAleatoire
+#include "chronometre.h"         //chrono
 #include "SaisiesUtilisateurs.h" //saisieClavier
 
 
 using namespace std;
 
+void affichageBut();
+void affichageResultats(const int& nbReponsesCorrectes, const double& tempsTotal, const int& nbLance);
 void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, double& tempsTotal);
 
 
@@ -43,32 +47,21 @@ int main() {
    char         reponseRejouer;
 
    //Présentation programme
-   cout << "Ce programme permet a l'utilisateur de tester sa dexterite au clavier" << endl
-        << " en générant des lettres aléatoirement que l'utilisateur doit reproduire"
-        << "au fur et à mesure.";
+   affichageBut();
 
    //Boucle pour recommencer
    do {
-       nbLance = saisieClavier("Combien de lances", LANCE_MIN, LANCE_MAX);  //Saisie nombre de lancer ( GESTION ERREUR )
+      //Saisie nombre de lancer ( GESTION ERREUR )
+      nbLance = saisieClavier("Combien de lances", LANCE_MIN, LANCE_MAX);
 
-       //Jeu ---- Boucle for avec nbLancer
-       for(int indiceLance = 0; indiceLance < nbLance; ++indiceLance) {
-           lance(LETTRE_MIN, LETTRE_MAX, nbCorrect, tempsTotal);
-       }
+      //Jeu ---- Boucle for avec nbLancer
+      for(int indiceLance = 0; indiceLance < nbLance; ++indiceLance) {
+         lance(LETTRE_MIN, LETTRE_MAX, nbCorrect, tempsTotal);
+      }
 
+      affichageResultats(nbCorrect, tempsTotal, nbLance);
 
-       //Fonction Affichage ----------------------------------------------------------------------------------------------------
-       cout << endl
-            << "Nombre de reponse correcte : " << nbCorrect       << endl
-            << "Temps total : "                << tempsTotal      << endl
-            << "Temps par lettre : "           << setprecision(2) << tempsTotal / (double)nbLance << endl;
-
-       //Fonction rejouer ------------------------------------------------------------------------------------------------------
-       do{
-          cout << endl << "Voulez-vous rejouer ? [" << REJOUER << "] ou [" << QUITTER << "] :";
-          reponseRejouer = (char)getchar();
-       }while(reponseRejouer == REJOUER or reponseRejouer == QUITTER);
-   } while(reponseRejouer == REJOUER); //Message pour recommencer" : O pour recommencer - N pour quitter
+   }while(rejouer());
 
     // Fin de programme
     cout << "Presser ENTER pour quitter";
@@ -78,7 +71,18 @@ int main() {
     return EXIT_SUCCESS;
 }
 
+void affichageBut(){
+   cout << "Ce programme permet a l'utilisateur de tester sa dexterite au clavier" << endl
+        << " en générant des lettres aléatoirement que l'utilisateur doit reproduire"
+        << "au fur et à mesure.";
+}
 
+void affichageResultats(const int& nbReponsesCorrectes, const double& tempsTotal, const int& nbLance){
+   cout << endl
+        << "Nombre de reponse correcte : " << nbReponsesCorrectes       << endl
+        << "Temps total : "                << tempsTotal      << endl
+        << "Temps par lettre : "           << setprecision(2) << tempsTotal / (double)nbLance << endl;
+}
 
 void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, double& tempsTotal){
    //Include pour rand
@@ -100,7 +104,7 @@ void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, double& tempsTo
    //Saisie de la réponse
    cout << "Lettre : " << lettre << " : ";
    reponse = (char)getchar();
-   //Vider Buffer ---------------------------------------------------------------------------------------------------------------
+   cin.ignore(numeric_limits<streamsize>::max(),'\n');
 
    //Fin du chrono et lecture du temps écoulé
    tempsTotal = chrono(false);

@@ -14,5 +14,7 @@ Il est aussi possible d'entrer des bornes min / max.
 */
 int saisieClavier(const std::string message, const int& minimum = 0, const int& maximum = 0);
 
+bool rejouer();
+
 #endif //LABO_08_CLAVIER_SAISIESUTILISATEURS_H
 

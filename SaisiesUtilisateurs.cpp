@@ -39,3 +39,21 @@ int saisieClavier(const string message, const int& minimum, const int& maximum){
 
    return valeur; // Retourne la saisie de l'utilisateur
 }
+
+bool rejouer(){
+   const char REJOUER = 'o';
+   const char QUITTER = 'n';
+   char reponse;
+
+   do{
+      cout << endl << "Voulez-vous rejouer ? [" << REJOUER << "] ou [" << QUITTER << "] :";
+      reponse = (char)getchar();
+      cin.ignore(numeric_limits<streamsize>::max(),'\n');
+   }while(reponse == REJOUER or reponse == QUITTER);
+
+   if(reponse == REJOUER){
+      return true;
+   } else{
+      return false;
+   }
+}
