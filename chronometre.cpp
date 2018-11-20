@@ -10,6 +10,6 @@ double chrono(const bool& active){
       return 0.;
    } else{
       tempsFinal = time(NULL);
-      return difftime(tempsInitial, tempsFinal);
+      return difftime(tempsFinal,tempsInitial);
    }
 }

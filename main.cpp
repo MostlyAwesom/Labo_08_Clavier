@@ -59,22 +59,16 @@ void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, double& tempsTo
 
 
 int main() {
-
    // Déclaration des variables et constantes
    const int    LETTRE_MIN = 1,
                 LETTRE_MAX = 26,
                 LANCE_MIN  = 1,
                 LANCE_MAX  = 10;
 
-   const char   REJOUER = 'o',
-                QUITTER = 'n';
-
    int          nbLance,
-                nbCorrect;
+                nbCorrect  = 0;
 
    double       tempsTotal;
-
-   char         reponseRejouer;
 
    // Présentation du programme
    affichageBut();
@@ -101,15 +95,15 @@ int main() {
 }
 
 void affichageBut(){
-   cout << "Ce programme permet a l'utilisateur de tester sa dexterite au clavier" << endl
-        << " en générant des lettres aléatoirement que l'utilisateur doit reproduire"
-        << "au fur et à mesure.";
+   cout << "Ce programme permet a l'utilisateur de tester sa dexterite au clavier"   << endl
+        << "en generant des lettres aleatoirement que l'utilisateur doit reproduire" << endl
+        << "au fur et a mesure.";
 }
 
 void affichageResultats(const int& nbReponsesCorrectes, const double& tempsTotal, const int& nbLance){
    cout << endl
-        << "Nombre de reponse correcte : " << nbReponsesCorrectes       << endl
-        << "Temps total : "                << tempsTotal      << endl
+        << "Nombre de reponse correcte : " << nbReponsesCorrectes                             << endl
+        << "Temps total : "                << tempsTotal                                      << endl
         << "Temps par lettre : "           << setprecision(2) << tempsTotal / (double)nbLance << endl;
 }
 
