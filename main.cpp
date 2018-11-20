@@ -20,7 +20,6 @@
 
 using namespace std;
 
-void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, int& tempsTotal);
 
 /**
 \brief retourne la saisie clavier
@@ -36,28 +35,33 @@ int saisieClavier(const string message, const int& minimum = 0, const int& maxim
 
 char saisieCaractere(const string& message);
 
+string concatStringCar(const string& chaine, const char& car, const bool& ordreGaucheADroite = true);
+
+void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, double& tempsTotal);
+
+
 int main() {
 
    //Déclaration des variables et constantes
-   const int   LETTRE_MIN = 1,
-               LETTRE_MAX = 26,
-               LANCE_MIN = 1,
-               LANCE_MAX = 10;
+   const int    LETTRE_MIN = 1,
+                LETTRE_MAX = 26,
+                LANCE_MIN  = 1,
+                LANCE_MAX  = 10;
 
-   const char  REJOUER = 'o',
-               QUITTER = 'n';
+   const char   REJOUER = 'o',
+                QUITTER = 'n';
 
-   const string MESSAGE_REJOUER = "Voulez-vous rejouer ? [" + REJOUER + "] ou [" + QUITTER + "] :";
+   const string MESSAGE_REJOUER = concatStringCar(
+                                        concatStringCar("Voulez-vous rejouer ? [", REJOUER) + "] ou [", QUITTER)
+                                  + "] :";
 
+   int          nbLance,
+                nbCorrect;
 
+   double       tempsMoyen,
+                tempsTotal;
 
-   int         nbLance,
-               nbCorrect;
-
-   double      tempsMoyen,
-               tempsTotal;
-
-   char        reponseRejouer;
+   char         reponseRejouer;
 
    //Présentation programme
    cout << "Ce programme permet a l'utilisateur de tester sa dexterite au clavier" << endl
@@ -74,9 +78,9 @@ int main() {
        }
 
        cout << endl
-            << "Nombre de reponse correcte : " << nbCorrect            << endl
-            << "Temps total : "                << tempsTotal           << endl
-            << "Temps par lettre : "           << tempsTotal / nbLance << endl;
+            << "Nombre de reponse correcte : " << nbCorrect                    << endl
+            << "Temps total : "                << tempsTotal                   << endl
+            << "Temps par lettre : "           << tempsTotal / (double)nbLance << endl;
 
        reponseRejouer = saisieCaractere(MESSAGE_REJOUER);
 
@@ -84,11 +88,11 @@ int main() {
 
     // Fin de programme
     cout << "Presser ENTER pour quitter";
+    //VIDER BUFFER
     return EXIT_SUCCESS;
 }
 
-void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, int& tempsTotal)
-{
+void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, double& tempsTotal){
    //Include pour rand
    //Include pour time
    //include pour timer
@@ -124,7 +128,15 @@ void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, int& tempsTotal
    }
 
    //Temps pour répondre est égal à la différence de l'heure entre l'énoncé et la réponse
-    tempsTotal =(int)(tempsFinal - tempsInitial);
+    tempsTotal = (double)(tempsFinal - tempsInitial);
+}
+
+string concatStringChar(const string& chaine, const char& car, const bool& ordreGaucheADroite){
+   if(ordreGaucheADroite){
+      return chaine + car;
+   } else{
+      return car + chaine;
+   }
 }
 
 int saisieClavier(const string message, const int& minimum, const int& maximum){
