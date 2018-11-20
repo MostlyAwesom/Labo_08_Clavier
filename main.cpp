@@ -16,6 +16,7 @@
 #include <cstdlib>
 #include <limits>  // numeric_limits   <--- pour saisieClavier();
 #include <ctime>  //A enlever avec les sous programmes
+#include <iomanip>
 
 
 using namespace std;
@@ -33,11 +34,9 @@ Cette fonction retourne la saisie clavier de l'utilisateur
 */
 int saisieClavier(const string message, const int& minimum = 0, const int& maximum = 0);
 
-char saisieCaractere(const string& message);
-
-string concatStringCar(const string& chaine, const char& car, const bool& ordreGaucheADroite = true);
-
 void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, double& tempsTotal);
+
+int nombreAleatoire(const int& min, const int& max);
 
 
 int main() {
@@ -51,15 +50,10 @@ int main() {
    const char   REJOUER = 'o',
                 QUITTER = 'n';
 
-   const string MESSAGE_REJOUER = concatStringCar(
-                                        concatStringCar("Voulez-vous rejouer ? [", REJOUER) + "] ou [", QUITTER)
-                                  + "] :";
-
    int          nbLance,
                 nbCorrect;
 
-   double       tempsMoyen,
-                tempsTotal;
+   double       tempsTotal;
 
    char         reponseRejouer;
 
@@ -78,12 +72,14 @@ int main() {
        }
 
        cout << endl
-            << "Nombre de reponse correcte : " << nbCorrect                    << endl
-            << "Temps total : "                << tempsTotal                   << endl
-            << "Temps par lettre : "           << tempsTotal / (double)nbLance << endl;
+            << "Nombre de reponse correcte : " << nbCorrect       << endl
+            << "Temps total : "                << tempsTotal      << endl
+            << "Temps par lettre : "           << setprecision(2) << tempsTotal / (double)nbLance << endl;
 
-       reponseRejouer = saisieCaractere(MESSAGE_REJOUER);
-
+       do{
+          cout << endl << "Voulez-vous rejouer ? [" << REJOUER << "] ou [" << QUITTER << "] :";
+          reponseRejouer = (char)getchar();
+       }while(reponseRejouer == REJOUER or reponseRejouer == QUITTER);
    } while(reponseRejouer == REJOUER); //Message pour recommencer" : O pour recommencer - N pour quitter
 
     // Fin de programme
@@ -101,23 +97,20 @@ void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, double& tempsTo
    char   lettre,
           reponse;
 
-   string message = "Lettre : ";
-
    time_t tempsInitial,
           tempsFinal;
 
    srand(time(NULL));
 
    //Génération aléatoire d'une lettre minuscule
-   lettre = (char)('a'+(rand() % (CAR_MAX - CAR_MIN) + CAR_MIN));
-
-   message += lettre;
+   lettre = (char)('a'+ nombreAleatoire(CAR_MIN, CAR_MAX) - 1);
 
    //Temps au début de la question
    time(&tempsInitial);
 
    //Saisie de la réponse
-   reponse = saisieCaractere(message);
+   cout << "Lettre : " << lettre << " : ";
+   reponse = (char)getchar();
 
    //Temps après la réponse
    time(&tempsFinal);
@@ -131,12 +124,8 @@ void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, double& tempsTo
     tempsTotal = (double)(tempsFinal - tempsInitial);
 }
 
-string concatStringChar(const string& chaine, const char& car, const bool& ordreGaucheADroite){
-   if(ordreGaucheADroite){
-      return chaine + car;
-   } else{
-      return car + chaine;
-   }
+int nombreAleatoire(const int& min, const int& max){
+   return rand() % ((max - min + 1) + min);
 }
 
 int saisieClavier(const string message, const int& minimum, const int& maximum){
@@ -175,15 +164,3 @@ int saisieClavier(const string message, const int& minimum, const int& maximum){
     return valeur; // Retourne la saisie de l'utilisateur
 }
 
-char saisieCaractere(const string& message){
-
-   char valeur;
-
-   cout << message;
-   cin >> valeur;
-
-   //Vide le buffer du cin
-   cin.ignore(numeric_limits<streamsize>::max(),'\n');
-
-   return valeur;
-}
