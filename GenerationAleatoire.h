@@ -1,0 +1,6 @@
+#ifndef LABO_08_CLAVIER_GENERATIONALEATOIRE_H
+#define LABO_08_CLAVIER_GENERATIONALEATOIRE_H
+
+int nombreAleatoire(const int& min, const int& max);
+
+#endif //LABO_08_CLAVIER_GENERATIONALEATOIRE_H
