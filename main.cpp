@@ -15,11 +15,12 @@
 #include <iostream>
 #include <cstdlib>
 #include <limits>  // numeric_limits   <--- pour saisieClavier();
+#include <ctime>  //A enlever avec les sous programmes
 
 
 using namespace std;
 
-void lance(const int& CAR_MIN, const int& CAR_MAX, const int& NB_LANCE, int& nbJuste, int& chrono);
+void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, int& tempsTotal);
 
 /**
 \brief retourne la saisie clavier
@@ -31,7 +32,9 @@ Cette fonction retourne la saisie clavier de l'utilisateur
  avce une gestion des erreurs.
  Il est aussi possible d'entrer des bornes min / max.
 */
-int saisieClavier(string message, int minimum = 0, int maximum = 0);
+int saisieClavier(const string message, const int& minimum = 0, const int& maximum = 0);
+
+char saisieCaractere(const string& message);
 
 int main() {
 
@@ -47,8 +50,7 @@ int main() {
    double      tempsMoyen,
                tempsTotal;
 
-   char        reponseLance,
-               reponseRejouer;
+   char        reponseRejouer;
 
    //Présentation programme
    cout << "Ce programme permet a l'utilisateur de tester sa dexterite au clavier" << endl
@@ -57,16 +59,20 @@ int main() {
 
    //Boucle pour recommencer
    do {
-       nbLance = int(saisieClavier("Combien de lances", LANCE_MIN, LANCE_MAX));  //Saisie nombre de lancer ( GESTION ERREUR )
+       nbLance = saisieClavier("Combien de lances", LANCE_MIN, LANCE_MAX);  //Saisie nombre de lancer ( GESTION ERREUR )
 
        //Jeu ---- Boucle for avec nbLancer
        for(int indiceLance = 0; indiceLance < nbLance; ++indiceLance) {
-           //Fonction Lance()
+           lance(LETTRE_MIN, LETTRE_MAX, nbCorrect, tempsTotal);
        }
-       //Afficher nbCorrect
-       //Affiche le temps total
-       //Calcul la moyenne du temps pour chaque lancé --------------- Fonction double tempsMoyen(int nbElements, double temps)
-        //affiche le temps moyen
+
+       cout << endl
+            << "Nombre de reponse correcte : " << nbCorrect  << endl
+            << "Temps total : "                << tempsTotal << endl
+            << "Temps par lettre : "           << tempsMoyen << endl;
+
+
+       //Calcul la moyenne du temps pour chaque lancé --------------- Fonction double tempsMoyen(int nbElements, double te
    } while(false); //Message pour recommencer" : O pour recommencer - N pour quitter
 
     // Fin de programme
@@ -74,18 +80,47 @@ int main() {
     return EXIT_SUCCESS;
 }
 
-void lance(const int& CAR_MIN, const int& CAR_MAX, const int& NB_LANCE, int& nbJuste, int& chrono)
+void lance(const int& CAR_MIN, const int& CAR_MAX, int& nbJuste, int& tempsTotal)
 {
-   //Générer lettre
-   //Afficher lettre
-   //Commencer Chrono
-   //Attendre réponse
-   //Vider buffer
-   //Arreter chrono
-   //Verifier reponse et incrément ou non nbJuste
+   //Include pour rand
+   //Include pour time
+   //include pour timer
+   //include string
+
+   char   lettre,
+          reponse;
+
+   string message = "Lettre : ";
+
+   time_t tempsInitial,
+          tempsFinal;
+
+   srand(time(NULL));
+
+   //Génération aléatoire d'une lettre minuscule
+   lettre = (char)('a'+(rand() % (CAR_MAX - CAR_MIN) + CAR_MIN));
+
+   message += lettre;
+
+   //Temps au début de la question
+   time(&tempsInitial);
+
+   //Saisie de la réponse
+   reponse = saisieCaractere(message);
+
+   //Temps après la réponse
+   time(&tempsFinal);
+
+   //En case de bonne réponse, on incrémente le total de réponses correctes
+   if(reponse == lettre){
+      nbJuste++;
+   }
+
+   //Temps pour répondre est égal à la différence de l'heure entre l'énoncé et la réponse
+    tempsTotal =(int)(tempsFinal - tempsInitial);
 }
 
-int saisieClavier(string message, int minimum, int maximum){
+int saisieClavier(const string message, const int& minimum, const int& maximum){
 
     // Déclaration des variables
     int valeur;
@@ -95,15 +130,21 @@ int saisieClavier(string message, int minimum, int maximum){
     do {
         // Affiche le message de saisie avec ou sans les bornes
         cout << endl << message;
-        if(minimum != maximum)
-            cout << " [" << minimum << "-" << maximum; // Affiche les bornes, car min/max sont différents
-        cout << "] : ";
+
+        if(minimum != maximum) {
+           // Affiche les bornes, car min/max sont différents
+           cout << " [" << minimum << "-" << maximum << "]";
+        }
+        cout << " : ";
 
         saisieValide = bool(cin >> valeur); // Saisie de la valeur et retour de l'état du cin
 
-        // Répare le cin si néscéssaire, puis vide le Buffer
-        if(cin.fail())
-            cin.clear();
+        // Répare le cin si nécessaire, puis vide le Buffer
+        if(cin.fail()) {
+           cin.clear();
+        }
+
+        //Vide le buffer
         cin.ignore(numeric_limits<streamsize>::max(),'\n');
 
         // condition while -> Recommence la saisie si :
@@ -113,4 +154,17 @@ int saisieClavier(string message, int minimum, int maximum){
     } while(!saisieValide or ((valeur < minimum or valeur > maximum) and minimum != maximum));
 
     return valeur; // Retourne la saisie de l'utilisateur
+}
+
+char saisieCaractere(const string& message){
+
+   char valeur;
+
+   cout << message;
+   cin >> valeur;
+
+   //Vide le buffer du cin
+   cin.ignore(numeric_limits<streamsize>::max(),'\n');
+
+   return valeur;
 }
