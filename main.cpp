@@ -44,6 +44,13 @@ int main() {
                LANCE_MIN = 1,
                LANCE_MAX = 10;
 
+   const char  REJOUER = 'o',
+               QUITTER = 'n';
+
+   const string MESSAGE_REJOUER = "Voulez-vous rejouer ? [" + REJOUER + "] ou [" + QUITTER + "] :";
+
+
+
    int         nbLance,
                nbCorrect;
 
@@ -67,13 +74,13 @@ int main() {
        }
 
        cout << endl
-            << "Nombre de reponse correcte : " << nbCorrect  << endl
-            << "Temps total : "                << tempsTotal << endl
-            << "Temps par lettre : "           << tempsMoyen << endl;
+            << "Nombre de reponse correcte : " << nbCorrect            << endl
+            << "Temps total : "                << tempsTotal           << endl
+            << "Temps par lettre : "           << tempsTotal / nbLance << endl;
 
+       reponseRejouer = saisieCaractere(MESSAGE_REJOUER);
 
-       //Calcul la moyenne du temps pour chaque lancé --------------- Fonction double tempsMoyen(int nbElements, double te
-   } while(false); //Message pour recommencer" : O pour recommencer - N pour quitter
+   } while(reponseRejouer == REJOUER); //Message pour recommencer" : O pour recommencer - N pour quitter
 
     // Fin de programme
     cout << "Presser ENTER pour quitter";
