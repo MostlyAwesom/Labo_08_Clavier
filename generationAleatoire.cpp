@@ -1,4 +1,4 @@
-#include "GenerationAleatoire.h"
+#include "generationAleatoire.h"
 #include <cstdlib>               //rand
 #include <ctime>                 //time
 

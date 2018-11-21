@@ -33,9 +33,10 @@
 #include <string>                //type string
 #include <iomanip>               //setPrecision
 #include <limits>                //numeric_limits
-#include "GenerationAleatoire.h" //nombreAleatoire
+#include "generationAleatoire.h" //nombreAleatoire
 #include "chronometre.h"         //chrono
-#include "SaisiesUtilisateurs.h" //saisieClavier
+#include "saisiesUtilisateurs.h" //saisieClavier
+#include "annexes.h"             //affichage et lance
 
 
 using namespace std;
@@ -114,34 +115,6 @@ int main() {
     cout << "Presser ENTER pour quitter";
     cin.ignore(numeric_limits<streamsize>::max(),'\n');
     return EXIT_SUCCESS;
-}
-
-void affichageBut(){
-    cout << "Ce programme permet a l'utilisateur de tester sa dexterite au clavier"   << endl
-         << "en generant des lettres aleatoirement que l'utilisateur doit reproduire" << endl
-         << "au fur et a mesure.";
-}
-
-void affichageResultats(const int& nbReponsesCorrectes, const double& tempsTotal, const double& nbLance){
-    cout << endl
-         << "Nombre de reponse correcte : " << nbReponsesCorrectes                             << endl
-         << "Temps total : "                << setprecision(2) << tempsTotal                   << endl
-         << "Temps par lettre : "           << setprecision(2) << tempsTotal / nbLance << endl;
-}
-
-void lance(const char& lettre, int& nbJuste){
-    // Déclaration des variables
-    char reponse;
-
-    //Saisie de la réponse
-    cout << "Lettre : " << lettre << " : ";
-    reponse = (char)getchar();
-    cin.ignore(numeric_limits<streamsize>::max(),'\n');
-
-    //En cas de bonne réponse, on incrémente le total de réponses correctes
-    if(reponse == lettre){
-        ++nbJuste;
-    }
 }
 
 

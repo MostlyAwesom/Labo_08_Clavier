@@ -2,13 +2,14 @@
 #include <ctime>         //time, difftime
 
 double chrono(const bool& active){
-    static time_t tempsInitial = time(nullptr);
-    time_t tempsFinal = time(nullptr);
+   static time_t tempsInitial = time(nullptr);
+   time_t tempsFinal;
 
-    if(active) {
-        tempsInitial = time(nullptr);
-        return 0.;
-    } else {
-        return difftime(tempsFinal,tempsInitial);
-    }
+   if(active) {
+      tempsInitial = time(nullptr);
+      return 0.;
+   } else {
+      tempsFinal = time(nullptr);
+      return difftime(tempsFinal,tempsInitial);
+   }
 }
