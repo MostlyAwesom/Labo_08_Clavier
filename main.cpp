@@ -60,35 +60,39 @@ void lance(const char& lettre, int& nbJuste);
 
 int main() {
    // Déclaration des variables et constantes
-   const int    LETTRE_MIN = 1,
-                LETTRE_MAX = 26,
-                LANCE_MIN  = 1,
+   const int    LANCE_MIN  = 1,
                 LANCE_MAX  = 10;
 
-   const char   APOSTROPHE    = '`'; //Caractère précédent 'a' dans la table ASCII
+   const char   LETTRE_MIN = 'a',
+                LETTRE_MAX = 'z';
 
    int          nbLance,
-                nbCorrect  = 0;
+                nbCorrect;
 
-   double       tempsTotal = 0.;
+   double       tempsTotal;
 
    // Présentation du programme
    affichageBut();
 
    // Boucle pour recommencer
    do {
+      // Mise à 0 du temps total et du nombre de réponses justes
+      tempsTotal = 0;
+      nbCorrect  = 0;
+
       // Saisie nombre de lancer , avec une gestion d'erreurs
       nbLance = saisieClavier("Combien de lances", LANCE_MIN, LANCE_MAX);
 
       //Démarrage du chrono
       chrono(true);
+
       // Lancement du test de dextérité
       for(int indiceLance = 0; indiceLance < nbLance; ++indiceLance) {
-         lance((APOSTROPHE + (char)nombreAleatoire(LETTRE_MIN, LETTRE_MAX)), nbCorrect);
+         lance((char)nombreAleatoire((int)LETTRE_MIN, (int)LETTRE_MAX), nbCorrect);
       }
 
       //Fin du chrono et lecture du temps écoulé
-      tempsTotal = chrono(false);
+      tempsTotal = chrono(false);   // <<--------------------------------- Moyen de mettre ça ? dans affichageResultat(,chrono(false),);
 
       // Affichage des résultats du test
       affichageResultats(nbCorrect, tempsTotal, (double)nbLance);
@@ -125,7 +129,7 @@ void lance(const char& lettre, int& nbJuste){
 
    //En cas de bonne réponse, on incrémente le total de réponses correctes
    if(reponse == lettre){
-      nbJuste++;
+      ++nbJuste;
    }
 }
 
