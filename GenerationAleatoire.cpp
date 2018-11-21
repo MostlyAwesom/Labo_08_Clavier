@@ -3,10 +3,14 @@
 #include <ctime>                 //time
 
 int nombreAleatoire(const int& min, const int& max){
-   static bool premiereFois = true;
-   if(premiereFois){
-      srand(time(NULL));
-      premiereFois = false;
-   }
-   return rand() % (max - min + 1) + min;
+
+    // Initialise le générateur de nombre aléatoire
+    static bool premiereFois = true;
+    if(premiereFois){
+        srand(time(NULL));
+        premiereFois = false;
+    }
+
+    // Retourne le nombre aléatoire dans les bornes
+    return rand() % (max - min + 1) + min;
 }
