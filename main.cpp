@@ -75,7 +75,7 @@ int main() {
       // Affichage des résultats du test
       affichageResultats(nbCorrect,chrono(false), (double)nbLance);
 
-   }while(rejouer());
+   } while(rejouer());
 
     // Fin de programme
     cout << "Presser ENTER pour quitter";
