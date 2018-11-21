@@ -11,9 +11,20 @@
  Auteur(s)   : Arthur Bécaud & Bruno Egremy
  Date        : 21.11.2018
 
- But         :
+ But         : Permettre à l'utilisateur de tester sa dextérité au clavier en générant
+               des lettres qu'il devra reproduire le plus rapidement possible
+               car ces performences sont chronométrées.
+               L'utilisateur est invité à choisir le nombre de lancé à faire, puis le
+               jeu commence.
+               Une fois terminée, le programme affiche les résultats où nous retrouvons
+               le nombre de réponse correcte, le temps écoulé et une moyenne du temps
+               passé par lettre en seconde.
+               L'utilisteur à ensuite le choix de recommencer le programme. S'il refuse,
+               le programme commencera ça procédure de fermeture
 
- Remarque(s) :
+ Remarque(s) : Gestion des erreurs intégrée lors de les saisies.
+               Le programme est réparti sous plusieurs fichiers afin de catégoriser ces
+               multiples fonctions pour pouvoir les réutiliser dans des projets futures.
 
  Compilateur : MinGW-g++ 6.3.0
  -----------------------------------------------------------------------------------
@@ -106,31 +117,31 @@ int main() {
 }
 
 void affichageBut(){
-   cout << "Ce programme permet a l'utilisateur de tester sa dexterite au clavier"   << endl
-        << "en generant des lettres aleatoirement que l'utilisateur doit reproduire" << endl
-        << "au fur et a mesure.";
+    cout << "Ce programme permet a l'utilisateur de tester sa dexterite au clavier"   << endl
+         << "en generant des lettres aleatoirement que l'utilisateur doit reproduire" << endl
+         << "au fur et a mesure.";
 }
 
 void affichageResultats(const int& nbReponsesCorrectes, const double& tempsTotal, const double& nbLance){
-   cout << endl
-        << "Nombre de reponse correcte : " << nbReponsesCorrectes                             << endl
-        << "Temps total : "                << setprecision(2) << tempsTotal                   << endl
-        << "Temps par lettre : "           << setprecision(2) << tempsTotal / nbLance << endl;
+    cout << endl
+         << "Nombre de reponse correcte : " << nbReponsesCorrectes                             << endl
+         << "Temps total : "                << setprecision(2) << tempsTotal                   << endl
+         << "Temps par lettre : "           << setprecision(2) << tempsTotal / nbLance << endl;
 }
 
 void lance(const char& lettre, int& nbJuste){
-   // Déclaration des variables
-   char   reponse;
+    // Déclaration des variables
+    char reponse;
 
-   //Saisie de la réponse
-   cout << "Lettre : " << lettre << " : ";
-   reponse = (char)getchar();
-   cin.ignore(numeric_limits<streamsize>::max(),'\n');
+    //Saisie de la réponse
+    cout << "Lettre : " << lettre << " : ";
+    reponse = (char)getchar();
+    cin.ignore(numeric_limits<streamsize>::max(),'\n');
 
-   //En cas de bonne réponse, on incrémente le total de réponses correctes
-   if(reponse == lettre){
-      ++nbJuste;
-   }
+    //En cas de bonne réponse, on incrémente le total de réponses correctes
+    if(reponse == lettre){
+        ++nbJuste;
+    }
 }
 
 
