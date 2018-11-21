@@ -12,7 +12,7 @@ Cette fonction retourne la saisie clavier de l'utilisateur
 avec une gestion des erreurs.
 Il est aussi possible d'entrer des bornes min / max.
 */
-int saisieClavier(const std::string message, const int& minimum = 0, const int& maximum = 0);
+int saisieClavier(const std::string& message, const int& minimum = 0, const int& maximum = 0);
 
 /**
  * \brief Demande à l'utilisateur s'il souhaite rejouer.

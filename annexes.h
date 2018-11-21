@@ -1,7 +1,3 @@
-//
-// Created by egrem on 21.11.2018.
-//
-
 #ifndef LABO_08_CLAVIER_ANNEXES_H
 #define LABO_08_CLAVIER_ANNEXES_H
 

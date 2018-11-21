@@ -1,7 +1,3 @@
-//
-// Created by egrem on 21.11.2018.
-//
-
 #include "annexes.h"
 #include <iostream>  //cout
 #include <limits>    //numeric_limits

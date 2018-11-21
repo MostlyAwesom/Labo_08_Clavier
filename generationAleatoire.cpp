@@ -7,7 +7,7 @@ int nombreAleatoire(const int& min, const int& max){
     // Initialise le générateur de nombre aléatoire
     static bool premiereFois = true;
     if(premiereFois){
-        srand(time(NULL));
+        srand(time(nullptr));
         premiereFois = false;
     }
 
