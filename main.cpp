@@ -33,6 +33,7 @@
 #include <string>                //type string
 #include <iomanip>               //setPrecision
 #include <limits>                //numeric_limits
+#include <cstdlib>               //EXIT_SUCCESS
 #include "generationAleatoire.h" //nombreAleatoire
 #include "chronometre.h"         //chrono
 #include "saisiesUtilisateurs.h" //saisieClavier
