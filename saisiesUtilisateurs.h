@@ -16,7 +16,7 @@ int saisieClavier(const std::string& message, const int& minimum = 0, const int&
 
 /**
  * \brief Demande à l'utilisateur s'il souhaite rejouer.
- * @return Retourne la réponse de l'utilisateur en booléen.
+ * \return Retourne la réponse de l'utilisateur en booléen.
  */
 bool rejouer();
 
